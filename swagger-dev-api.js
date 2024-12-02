@@ -6,7 +6,7 @@ export const swaggeroptions = {
     title: "Docter Management System",
   },
   host: "health-and-care-apis.onrender.com",
-  schemes: ["http"], // Change to 'https' in production if secure
+  schemes: ["https"], // Change to 'https' in production if secure
   paths: {
     // Users Api
 
