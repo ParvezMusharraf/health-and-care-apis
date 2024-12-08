@@ -46,7 +46,7 @@ export const swaggeroptions = {
             description: "User created successfully",
             examples: {
               "application/json": {
-                status: "success",
+                code: "success",
                 message: "User Created Successfully",
                 token: "eyJhbGciOiJIUzI1NiIsInR5cCI...",
               },
@@ -56,7 +56,7 @@ export const swaggeroptions = {
             description: "Validation error or bad request",
             examples: {
               "application/json": {
-                status: "failed",
+                code: "failed",
                 message: "All fields are required",
               },
             },
@@ -65,7 +65,7 @@ export const swaggeroptions = {
             description: "User already exists",
             examples: {
               "application/json": {
-                status: "failed",
+                code: "failed",
                 message: "User already exists",
               },
             },
@@ -74,7 +74,7 @@ export const swaggeroptions = {
             description: "Server error",
             examples: {
               "application/json": {
-                status: "failed",
+                code: "failed",
                 message: "Unable to register",
               },
             },
@@ -82,6 +82,7 @@ export const swaggeroptions = {
         },
       },
     },
+    
     "/api/user/login": {
       post: {
         tags: ["User Management"],

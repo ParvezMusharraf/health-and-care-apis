@@ -35,13 +35,13 @@ class UserController {
           );
 
           res.send({
-            status: "success",
+            code: "success",
             message: "User Created Succesfully",
             token: token,
           });
         } catch (error) {
           console.log(error);
-          res.send({ status: "failed", message: "Unable to Register" });
+          res.send({ code: "failed", message: "Unable to Register" });
         }
       } else {
         res.send({ code: "failed", message: "All Feilds are required" });
