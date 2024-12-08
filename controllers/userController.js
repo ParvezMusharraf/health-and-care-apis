@@ -65,13 +65,13 @@ class UserController {
               { expiresIn: "5d" }
             );
             res.send({
-              status: "Success",
+              code: "Success",
               token: token,
               message: "Login Successfully",
             });
           } else {
             res.send({
-              status: "failed",
+              code: "failed",
               message: "Email or Password is not Valid",
             });
           }
@@ -86,7 +86,7 @@ class UserController {
       }
     } catch (error) {
       console.log(error);
-      res.send({ status: "failed", message: "Unable to Login" });
+      res.send({ code: "failed", message: "Unable to Login" });
     }
   };
 

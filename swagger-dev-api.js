@@ -110,7 +110,7 @@ export const swaggeroptions = {
             description: "Login successful",
             examples: {
               "application/json": {
-                status: "Success",
+                code: "Success",
                 token: "eyJhbGciOiJIUzI1NiIsInR5cCI...",
                 message: "Login Successfully",
               },
@@ -120,7 +120,7 @@ export const swaggeroptions = {
             description: "Invalid credentials",
             examples: {
               "application/json": {
-                status: "failed",
+                code: "failed",
                 message: "Email or Password is not Valid",
               },
             },
@@ -147,7 +147,7 @@ export const swaggeroptions = {
             description: "Server error",
             examples: {
               "application/json": {
-                status: "failed",
+                code: "failed",
                 message: "Unable to Login",
               },
             },
@@ -208,7 +208,7 @@ export const swaggeroptions = {
             description: "Doctor created successfully",
             examples: {
               "application/json": {
-                status: "Success",
+                code: "Success",
                 message: "Doctor created successfully",
               },
             },
@@ -217,11 +217,11 @@ export const swaggeroptions = {
             description: "Validation error or user already exists",
             examples: {
               "application/json": {
-                status: "Failed",
+                code: "Failed",
                 message: "All fields are required",
               },
               "application/json": {
-                status: "Failed",
+                code: "Failed",
                 message: "User already exists",
               },
             },
@@ -230,7 +230,7 @@ export const swaggeroptions = {
             description: "Internal server error",
             examples: {
               "application/json": {
-                status: "Error",
+                code: "Error",
                 message: "Internal Server Error",
               },
             },
@@ -327,7 +327,7 @@ export const swaggeroptions = {
             description: "Internal server error",
             examples: {
               "application/json": {
-                status: "Error",
+                code: "Error",
                 message: "Internal Server Error",
               },
             },
@@ -430,7 +430,7 @@ export const swaggeroptions = {
             description: "Internal server error",
             examples: {
               "application/json": {
-                status: "Error",
+                code: "Error",
                 message: "Internal Server Error",
               },
             },
@@ -532,7 +532,7 @@ export const swaggeroptions = {
             description: "Internal server error",
             examples: {
               "application/json": {
-                status: "Error",
+                code: "Error",
                 message: "Internal Server Error",
               },
             },
@@ -665,15 +665,15 @@ export const swaggeroptions = {
             description: "Validation error or missing fields",
             examples: {
               "application/json": {
-                status: "Failed",
+                code: "Failed",
                 message: "All fields are required",
               },
               "application/json": {
-                status: "Failed",
+                code: "Failed",
                 message: "Invalid email format",
               },
               "application/json": {
-                status: "Failed",
+                code: "Failed",
                 message: "Invalid contact number format",
               },
             },
@@ -682,11 +682,11 @@ export const swaggeroptions = {
             description: "Department or doctor not found",
             examples: {
               "application/json": {
-                status: "Failed",
+                code: "Failed",
                 message: "Department not found",
               },
               "application/json": {
-                status: "Failed",
+                code: "Failed",
                 message: "Doctor not found",
               },
             },
@@ -695,7 +695,7 @@ export const swaggeroptions = {
             description: "Internal server error",
             examples: {
               "application/json": {
-                status: "Error",
+                code: "Error",
                 message: "Internal Server Error",
               },
             },

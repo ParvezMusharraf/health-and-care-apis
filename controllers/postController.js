@@ -20,7 +20,7 @@ class postController {
       if (!roleName) {
         return res
           .status(400)
-          .send({ status: "failed", message: "Role Name is required" });
+          .send({ code: "failed", message: "Role Name is required" });
       }
 
       // Check if the role already exists
@@ -28,7 +28,7 @@ class postController {
       if (role) {
         return res
           .status(409)
-          .send({ status: "failed", message: "Role already exists" });
+          .send({ code: "failed", message: "Role already exists" });
       }
 
       // Create and save the new role
@@ -37,7 +37,7 @@ class postController {
 
       // Send a success response
       res.status(201).send({
-        status: "success",
+        code: "success",
         message: "Role created successfully",
         data: newRole,
       });
@@ -45,7 +45,7 @@ class postController {
       console.error(error);
       res
         .status(500)
-        .send({ status: "error", message: "Internal Server Error" });
+        .send({ code: "error", message: "Internal Server Error" });
     }
   };
 
@@ -77,7 +77,7 @@ class postController {
       ) {
         return res
           .status(400)
-          .json({ status: "Failed", message: "All fields are required" });
+          .json({ code: "Failed", message: "All fields are required" });
       }
 
       // Check if user already exists
@@ -85,7 +85,7 @@ class postController {
       if (existingUser) {
         return res
           .status(400)
-          .json({ status: "Failed", message: "User already exists" });
+          .json({ code: "Failed", message: "User already exists" });
       }
 
       console.log(email, "emial..........");
@@ -112,12 +112,12 @@ class postController {
         await newDoctor.save();
 
         return res.status(201).json({
-          status: "Success",
+          code: "Success",
           message: "Doctor created successfully",
         });
       } else {
         return res.status(500).json({
-          status: "Failed",
+          code: "Failed",
           message: "Error creating user",
         });
       }
@@ -125,7 +125,7 @@ class postController {
       console.error(error);
       res
         .status(500)
-        .json({ status: "Error", message: "Internal Server Error" });
+        .json({ code: "Error", message: "Internal Server Error" });
     }
   };
 
@@ -155,7 +155,7 @@ class postController {
       console.error(error);
       res
         .status(500)
-        .json({ status: "Error", message: "Internal Server Error" });
+        .json({ code: "Error", message: "Internal Server Error" });
     }
   };
 
@@ -185,7 +185,7 @@ class postController {
       console.error(error);
       res
         .status(500)
-        .json({ status: "Error", message: "Internal Server Error" });
+        .json({ code: "Error", message: "Internal Server Error" });
     }
   };
 
@@ -215,7 +215,7 @@ class postController {
       console.error(error);
       res
         .status(500)
-        .json({ status: "Error", message: "Internal Server Error" });
+        .json({ code: "Error", message: "Internal Server Error" });
     }
   };
 
@@ -244,7 +244,7 @@ class postController {
       ) {
         return res
           .status(400)
-          .json({ status: "Failed", message: "All fields are required" });
+          .json({ code: "Failed", message: "All fields are required" });
       }
   
       // Validate email format
@@ -252,7 +252,7 @@ class postController {
       if (!emailRegex.test(email)) {
         return res
           .status(400)
-          .json({ status: "Failed", message: "Invalid email format" });
+          .json({ code: "Failed", message: "Invalid email format" });
       }
   
       // Validate contact number format (e.g., 10-15 digits)
@@ -260,7 +260,7 @@ class postController {
       if (!contactNoRegex.test(contactNo)) {
         return res
           .status(400)
-          .json({ status: "Failed", message: "Invalid contact number format" });
+          .json({ code: "Failed", message: "Invalid contact number format" });
       }
   
       // Verify department and doctor existence
@@ -268,14 +268,14 @@ class postController {
       if (!department) {
         return res
           .status(404)
-          .json({ status: "Failed", message: "Department not found" });
+          .json({ code: "Failed", message: "Department not found" });
       }
   
       const doctor = await doctorModel.findById(docterId);
       if (!doctor) {
         return res
           .status(404)
-          .json({ status: "Failed", message: "Doctor not found" });
+          .json({ code: "Failed", message: "Doctor not found" });
       }
   
       // Save the appointment
@@ -302,7 +302,7 @@ class postController {
     } catch (error) {
       console.error("Error saving appointment:", error.message);
       res.status(500).json({
-        status: "Error",
+        code: "Error",
         message: "Internal Server Error",
       });
     }
