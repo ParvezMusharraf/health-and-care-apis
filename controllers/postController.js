@@ -88,7 +88,6 @@ class postController {
           .json({ code: "Failed", message: "User already exists" });
       }
 
-      console.log(email, "emial..........");
       // Create user
       const user = await UserController.CreateUser(
         firstName,

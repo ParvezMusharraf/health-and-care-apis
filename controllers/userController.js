@@ -1,6 +1,7 @@
 import userModel from "../models/Users.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import roleModel from "../models/Roles.js";
 
 const customerRoleId = "67334657000991a91df08e60";
 
@@ -134,6 +135,50 @@ class UserController {
     } catch (error) {
       console.error("Error creating user:", error);
       throw new Error("Unable to create user"); // Let the calling function handle the error
+    }
+  };
+
+  static registerAdmin = async (req, res) => {
+    const { firstname, lastname, email, contactNo, password } = req.body;
+
+    const user = await userModel.findOne({ email });
+    if (user) {
+      res.send({ code: "failed", message: "user already exist" });
+    } else {
+      if (firstname && lastname && email && contactNo && password) {
+        try {
+          const admin = await roleModel.findOne({roleName:"admin"})
+          const salt = await bcrypt.genSalt(10);
+          const hashPassword = await bcrypt.hash(password, salt);
+          const newUser = new userModel({
+            firstname: firstname,
+            lastname: lastname,
+            email: email,
+            contactNo: contactNo,
+            password: password,
+            roleId: admin._id,
+          });
+          await newUser.save();
+
+          const saved_user = userModel.findOne({ email: email });
+          const token = jwt.sign(
+            { userId: saved_user._id },
+            process.env.JWT_SECRET,
+            { expiresIn: "1d" }
+          );
+
+          res.send({
+            code: "success",
+            message: "admin Created Succesfully",
+            token: token,
+          });
+        } catch (error) {
+          console.log(error);
+          res.send({ code: "failed", message: "Unable to Register" });
+        }
+      } else {
+        res.send({ code: "failed", message: "All Feilds are required" });
+      }
     }
   };
 }
