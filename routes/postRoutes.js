@@ -10,6 +10,7 @@ router.post("/SaveSpaciality",postController.saveSpeciality)
 router.post("/SaveDepartment",postController.saveDepartment)
 router.post("/SaveStatus",postController.saveStatus)
 router.post("/Saveappointment",postController.saveAppointment)
+router.post("/saveadmin",postController.saveAppointment)
 
 
 export default router;

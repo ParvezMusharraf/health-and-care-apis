@@ -90,7 +90,24 @@ class UserController {
     }
   };
 
-  static CreateUser = async (firstname, lastname, email, contactNo, password, roleId) => {
+  // lOGGED USER DETAILS
+  static loggedUser = async (req, res) => {
+    console.log("loged user called");
+    res.send({
+      user: req?.user,
+      userCurrentPlan: req?.userCurrentPlan,
+      userAccess: req?.userAccess,
+    });
+  };
+
+  static CreateUser = async (
+    firstname,
+    lastname,
+    email,
+    contactNo,
+    password,
+    roleId
+  ) => {
     try {
       // Hash the password
       // const hashedPassword = await bcrypt.hash(password, 10);
@@ -99,9 +116,8 @@ class UserController {
         throw new Error("Email is required");
       }
 
-      console.log(email,"email........")
+      console.log(email, "email........");
 
-      
       // Create a new user
       const newUser = new userModel({
         firstname: firstname,
@@ -111,9 +127,9 @@ class UserController {
         password: password,
         roleId: roleId || customerRoleId, // Replace with actual doctor role ID
       });
-  
+
       const savedUser = await newUser.save();
-  
+
       return savedUser; // Return the created user
     } catch (error) {
       console.error("Error creating user:", error);
