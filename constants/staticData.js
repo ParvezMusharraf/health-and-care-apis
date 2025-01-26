@@ -1,3 +1,20 @@
+export const mock_Roles = [
+  "admin",
+  "superAdmin",
+  "customer",
+  "docter"
+]
+
+
+export const mock_status = [
+  "Pending",
+  "Completed",
+  "Schedule",
+  "Confirmed",
+  "Reject"
+]
+
+
 export const mock_Menus = [
   "admin_dashboard",
   "admin_appointment",
