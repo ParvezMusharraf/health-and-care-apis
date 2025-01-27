@@ -10,7 +10,7 @@ class getController {
   static getAllDocters = async (req, res) => {
     try {
       const DoctersList = await doctorModel
-        .find().populate('userId') // Populate the user details
+        .find().populate('userId')
       if (DoctersList.length == 0) {
         return res.status(200).json({
           code: "success",
