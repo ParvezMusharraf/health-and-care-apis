@@ -2,7 +2,6 @@ import doctorModel from "../models/Docter.js";
 import roleModel from "../models/Roles.js";
 import SpecialtyModel from "../models/Spaciality.js";
 import userModel from "../models/Users.js";
-import UserController from "./userController.js";
 import StatusModel from "../models/Status.js";
 import Department from "../models/Departments.js";
 import Appointment from "../models/Appointments.js";
@@ -41,9 +40,7 @@ class postController {
       });
     } catch (error) {
       console.error(error);
-      res
-        .status(500)
-        .send({ code: "error", message: "Internal Server Error" });
+      res.status(500).send({ code: "error", message: "Internal Server Error" });
     }
   };
 
@@ -86,45 +83,46 @@ class postController {
           .json({ code: "Failed", message: "User already exists" });
       }
 
-      const docter = await roleModel.find({roleName:"docter"})
+      const docter = await roleModel.findOne({ roleName: "docter" });
 
-      // Create user
-      const user = await UserController.CreateUser(
-        firstName,
-        lastName,
-        email,
-        contactNo,
-        password,
-        docter._Id
-      );
-
-      if (user) {
-        // Create doctor profile
-        const newDoctor = new doctorModel({
-          userId: user._id, // Use the created user's ID
-          // specialtyId: specialtyId,
-          experience: experience,
-          fees: fees,
-          departmentId: departmentId,
+      if (docter) {
+        const newUser = new userModel({
+          firstname: firstName,
+          lastname: lastName,
+          email: email,
+          contactNo: contactNo,
+          password: password,
+          roleId: docter._id, // Replace with actual doctor role ID
         });
 
-        await newDoctor.save();
+        const savedUser = await newUser.save();
 
-        return res.status(201).json({
-          code: "Success",
-          message: "Doctor created successfully",
-        });
-      } else {
-        return res.status(500).json({
-          code: "Failed",
-          message: "Error creating user",
-        });
+        if (savedUser) {
+          // Create doctor profile
+          const newDoctor = new doctorModel({
+            userId: savedUser._id, // Use the created user's ID
+            // specialtyId: specialtyId,
+            experience: experience,
+            fees: fees,
+            departmentId: departmentId,
+          });
+
+          await newDoctor.save();
+
+          return res.status(201).json({
+            code: "Success",
+            message: "Doctor created successfully",
+          });
+        } else {
+          return res.status(500).json({
+            code: "Failed",
+            message: "Error creating user",
+          });
+        }
       }
     } catch (error) {
       console.error(error);
-      res
-        .status(500)
-        .json({ code: "Error", message: "Internal Server Error" });
+      res.status(500).json({ code: "Error", message: "Internal Server Error" });
     }
   };
 
@@ -152,9 +150,7 @@ class postController {
       }
     } catch (error) {
       console.error(error);
-      res
-        .status(500)
-        .json({ code: "Error", message: "Internal Server Error" });
+      res.status(500).json({ code: "Error", message: "Internal Server Error" });
     }
   };
 
@@ -182,9 +178,7 @@ class postController {
       }
     } catch (error) {
       console.error(error);
-      res
-        .status(500)
-        .json({ code: "Error", message: "Internal Server Error" });
+      res.status(500).json({ code: "Error", message: "Internal Server Error" });
     }
   };
 
@@ -212,9 +206,7 @@ class postController {
       }
     } catch (error) {
       console.error(error);
-      res
-        .status(500)
-        .json({ code: "Error", message: "Internal Server Error" });
+      res.status(500).json({ code: "Error", message: "Internal Server Error" });
     }
   };
 
@@ -230,7 +222,7 @@ class postController {
         docterId,
         notes,
       } = req.body;
-  
+
       // Validate required fields
       if (
         !firstName ||
@@ -245,7 +237,7 @@ class postController {
           .status(400)
           .json({ code: "Failed", message: "All fields are required" });
       }
-  
+
       // Validate email format
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
@@ -253,7 +245,7 @@ class postController {
           .status(400)
           .json({ code: "Failed", message: "Invalid email format" });
       }
-  
+
       // Validate contact number format (e.g., 10-15 digits)
       const contactNoRegex = /^\+?\d{10,15}$/;
       if (!contactNoRegex.test(contactNo)) {
@@ -261,7 +253,7 @@ class postController {
           .status(400)
           .json({ code: "Failed", message: "Invalid contact number format" });
       }
-  
+
       // Verify department and doctor existence
       const department = await Department.findById(departmentId);
       if (!department) {
@@ -269,29 +261,29 @@ class postController {
           .status(404)
           .json({ code: "Failed", message: "Department not found" });
       }
-  
+
       const doctor = await doctorModel.findById(docterId);
       if (!doctor) {
         return res
           .status(404)
           .json({ code: "Failed", message: "Doctor not found" });
       }
-  
+
       // Save the appointment
       const appointment = new Appointment({
-        firstname:firstName,
-        lastname:lastName,
-        email:email,
+        firstname: firstName,
+        lastname: lastName,
+        email: email,
         contactNo,
-        appointmentDate :dateOfAppointment,
+        appointmentDate: dateOfAppointment,
         departmentId,
-        doctorId :docterId,
+        doctorId: docterId,
         notes,
-        status:pendingStatusId
+        status: pendingStatusId,
       });
-  
+
       await appointment.save();
-  
+
       // Respond with success
       res.status(200).json({
         code: "Success",

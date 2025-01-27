@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import roleModel from "../models/Roles.js";
 
-const customerRoleId = "67334657000991a91df08e60";
 
 class UserController {
   // signup user
@@ -16,6 +15,7 @@ class UserController {
     } else {
       if (firstname && lastname && email && contactNo && password) {
         try {
+          const customer = roleModel.findOne({roleName:"customer"})
           const salt = await bcrypt.genSalt(10);
           const hashPassword = await bcrypt.hash(password, salt);
           const newUser = new userModel({
@@ -24,7 +24,7 @@ class UserController {
             email: email,
             contactNo: contactNo,
             password: password,
-            roleId: customerRoleId,
+            roleId: customer._id,
           });
           await newUser.save();
 
@@ -99,43 +99,6 @@ class UserController {
       userCurrentPlan: req?.userCurrentPlan,
       userAccess: req?.userAccess,
     });
-  };
-
-  static CreateUser = async (
-    firstname,
-    lastname,
-    email,
-    contactNo,
-    password,
-    roleId
-  ) => {
-    try {
-      // Hash the password
-      // const hashedPassword = await bcrypt.hash(password, 10);
-
-      if (!email || email.trim() === "") {
-        throw new Error("Email is required");
-      }
-
-      console.log(email, "email........");
-
-      // Create a new user
-      const newUser = new userModel({
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-        contactNo: contactNo,
-        password: password,
-        roleId: roleId || customerRoleId, // Replace with actual doctor role ID
-      });
-
-      const savedUser = await newUser.save();
-
-      return savedUser; // Return the created user
-    } catch (error) {
-      console.error("Error creating user:", error);
-      throw new Error("Unable to create user"); // Let the calling function handle the error
-    }
   };
 
   static registerAdmin = async (req, res) => {
