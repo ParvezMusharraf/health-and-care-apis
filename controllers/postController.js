@@ -262,12 +262,14 @@ class postController {
           .json({ code: "Failed", message: "Department not found" });
       }
 
-      const doctor = await doctorModel.findById(docterId);
+      const doctor = await doctorModel.findOne({_id:docterId});
       if (!doctor) {
         return res
           .status(404)
           .json({ code: "Failed", message: "Doctor not found" });
       }
+
+      const statusid = await StatusModel.findOne({name:"Pending"})
 
       // Save the appointment
       const appointment = new Appointment({
@@ -279,7 +281,7 @@ class postController {
         departmentId,
         doctorId: docterId,
         notes,
-        status: pendingStatusId,
+        status: statusid._id,
       });
 
       await appointment.save();
