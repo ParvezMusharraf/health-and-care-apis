@@ -4,24 +4,31 @@ import userModel from '../models/Users.js'
 import Department from '../models/Departments.js';
 import Appointment from '../models/Appointments.js';
 import StatusModel from '../models/Status.js';
+import roleModel from "../models/Roles.js";
+import doctorModel from '../models/Docter.js';
 
-const docterRoleId = "6733464c000991a91df08e5a";
+
 
 class getController {
     static getAllDocters = async(req,res)=>{
         try {
-            const DoctersList = await userModel.find({roleId:docterRoleId})
-            if(DoctersList.length == 0 ){
-                return res.status(200).json({
-                    code :"Failed",
-                    message:"No Docter Found"
-                })
+
+            const docterRole = await roleModel.findOne({roleName:"docter"})
+            if(docterRole){
+              console.log(docterRole,"role")
+              const DoctersList = await userModel.find({roleId:docterRole._id})
+              if(DoctersList.length == 0 ){
+                  return res.status(200).json({
+                      code :"success",
+                      message:"No Docter Found"
+                  })
+              }
+              res.status(200).json({
+                  code:"success",
+                  data:DoctersList,
+                  message:"Docters List"
+              })
             }
-            res.status(200).json({
-                code:"Failed",
-                data:DoctersList,
-                message:"Docters List"
-            })
 
         } catch (error) {
             res.json({
@@ -58,14 +65,12 @@ class getController {
         try {
           const SpecilityList = await Department.find(); // Corrected query
           if (SpecilityList.length === 0) {
-            return res.status(404).json({
+            return res.status(200).json({
               code: "Failed",
               message: "No Departments found",
             });
           }
-      
-          console.log(SpecilityList, "department");
-          res.status(200).json({
+                res.status(200).json({
             code: "Success",
             data: SpecilityList,
             message: "Department list retrieved successfully",

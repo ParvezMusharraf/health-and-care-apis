@@ -7,11 +7,11 @@ const doctorSchema = new mongoose.Schema({
     required: true,
     unique: true, // Ensures a user can only be associated with one doctor profile
   },
-  specialtyId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Specialty',
-    required: true,
-  },
+  // specialtyId: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Specialty',
+  //   required: true,
+  // },
   experience: {
     type: Number,
     required: true,

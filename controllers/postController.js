@@ -7,8 +7,6 @@ import StatusModel from "../models/Status.js";
 import Department from "../models/Departments.js";
 import Appointment from "../models/Appointments.js";
 
-const docterRoleId = "6733464c000991a91df08e5a";
-const customerRoleId = "67334657000991a91df08e60";
 const pendingStatusId = "674c7b2b87f7153d70cdef81";
 
 class postController {
@@ -57,7 +55,7 @@ class postController {
         email,
         contactNo,
         password,
-        specialtyId,
+        // specialtyId,
         fees,
         departmentId,
         experience,
@@ -70,7 +68,7 @@ class postController {
         !email ||
         !contactNo ||
         !password ||
-        !specialtyId ||
+        // !specialtyId ||
         !fees ||
         !departmentId ||
         !experience
@@ -88,6 +86,8 @@ class postController {
           .json({ code: "Failed", message: "User already exists" });
       }
 
+      const docter = await roleModel.find({roleName:"docter"})
+
       // Create user
       const user = await UserController.CreateUser(
         firstName,
@@ -95,14 +95,14 @@ class postController {
         email,
         contactNo,
         password,
-        docterRoleId
+        docter._Id
       );
 
       if (user) {
         // Create doctor profile
         const newDoctor = new doctorModel({
           userId: user._id, // Use the created user's ID
-          specialtyId: specialtyId,
+          // specialtyId: specialtyId,
           experience: experience,
           fees: fees,
           departmentId: departmentId,
