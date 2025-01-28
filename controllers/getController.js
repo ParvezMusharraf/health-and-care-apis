@@ -9,8 +9,7 @@ import doctorModel from "../models/Docter.js";
 class getController {
   static getAllDocters = async (req, res) => {
     try {
-      const DoctersList = await doctorModel
-        .find().populate('userId')
+      const DoctersList = await doctorModel.find().populate("userId");
       if (DoctersList.length == 0) {
         return res.status(200).json({
           code: "success",
@@ -76,9 +75,16 @@ class getController {
   };
   static getAllAppointments = async (req, res) => {
     try {
-      const SpecilityList = await Appointment.find(); // Corrected query
+      const SpecilityList = await Appointment.find({ userId: req.user._id })
+        .populate({
+          path: "doctorId",
+          populate: {
+            path: "userId",
+          },
+        })
+        .populate("departmentId");
       if (SpecilityList.length === 0) {
-        return res.status(404).json({
+        return res.status(200).json({
           code: "Failed",
           message: "No Appointment found",
         });

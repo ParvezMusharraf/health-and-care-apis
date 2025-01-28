@@ -9,7 +9,7 @@ router.get("/AllDocters",getController.getAllDocters)
 router.get("/getconfig", checkUserAuth, UserController.loggedUser);
 router.get("/AllSpecility",getController.getAllSpeciality)
 router.get("/AllDepartment",getController.getAllDepartments)
-router.get("/AllAppointment",getController.getAllAppointments)
+router.get("/AllAppointment",checkUserAuth ,getController.getAllAppointments)
 router.get("/AllStatus",getController.getAllStatus)
 
 

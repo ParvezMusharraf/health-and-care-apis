@@ -282,6 +282,7 @@ class postController {
         doctorId: docterId,
         notes,
         status: statusid._id,
+        userId:req.user._id
       });
 
       await appointment.save();
