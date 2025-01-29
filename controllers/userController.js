@@ -15,9 +15,9 @@ class UserController {
     } else {
       if (firstname && lastname && email && contactNo && password) {
         try {
-          const customer = roleModel.findOne({roleName:"customer"})
-          const salt = await bcrypt.genSalt(10);
-          const hashPassword = await bcrypt.hash(password, salt);
+          const customer = await roleModel.findOne({roleName:"customer"})
+        
+
           const newUser = new userModel({
             firstname: firstname,
             lastname: lastname,
