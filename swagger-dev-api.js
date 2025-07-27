@@ -761,5 +761,75 @@ export const swaggeroptions = {
         },
       },
     },
+    "/api/user/registerAdmin": {
+      post: {
+        tags: ["User Management"],
+        description: "Register a new admin user",
+        produces: ["application/json"],
+        parameters: [
+          {
+            in: "body",
+            name: "body",
+            required: true,
+            schema: {
+              type: "object",
+              required: [
+                "firstname",
+                "lastname",
+                "email",
+                "contactNo",
+                "password",
+              ],
+              properties: {
+                firstname: { type: "string", example: "John" },
+                lastname: { type: "string", example: "Doe" },
+                email: { type: "string", example: "john.doe@example.com" },
+                contactNo: { type: "string", example: "9876543210" },
+                password: { type: "string", example: "admin123" },
+              },
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "Successfully registered an admin user",
+            examples: {
+              "application/json": {
+                code: "success",
+                message: "admin Created Succesfully",
+                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+              },
+            },
+          },
+          400: {
+            description: "Bad request due to missing fields or existing user",
+            examples: {
+              "application/json": {
+                code: "failed",
+                message: "All Feilds are required",
+              },
+            },
+          },
+          409: {
+            description: "Conflict - User already exists",
+            examples: {
+              "application/json": {
+                code: "failed",
+                message: "user already exist",
+              },
+            },
+          },
+          500: {
+            description: "Internal server error during registration",
+            examples: {
+              "application/json": {
+                code: "failed",
+                message: "Unable to Register",
+              },
+            },
+          },
+        },
+      },
+    },
   },
 };
